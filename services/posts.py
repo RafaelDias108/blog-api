@@ -1,5 +1,5 @@
 from databases.interfaces import Record
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 from models.post import posts
 from schemas.post import PostIn, PostUpdateIn
@@ -24,9 +24,9 @@ class PostService:
         return {**post.model_dump(), "id": last_record_id}
 
     async def update(self, id: int, post: PostUpdateIn) -> Record:
-        total = self.count()
+        total = self.count(id=id)
         if not total:
-            raise HTTPException(status_code=404, detail="Post not found")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
 
         data = post.model_dump(exclude_unset=True)
         query = posts.update().where(posts.c.id == id).values(**data)
@@ -43,7 +43,7 @@ class PostService:
         post = await database.fetch_one(query=query)
 
         if not post:
-            raise HTTPException(status_code=404, detail="Post not found")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
         return post
     
     async def count(self, id: int) -> int:
