@@ -1,6 +1,6 @@
 import databases
 import sqlalchemy
-from settings import settings
+from src.settings import settings
 
 DATABASE_URL = settings.database_url
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
 
-from schemas.auth import LoginIn
-from security.sign_jwt import sign_jwt
-from views.auth import LoginOut
+from src.schemas.auth import LoginIn
+from src.security.sign_jwt import sign_jwt
+from src.views.auth import LoginOut
 
 router = APIRouter(prefix="/auth")
 

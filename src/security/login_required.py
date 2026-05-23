@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPBearer
 
-from security.sign_jwt import JWTToken, decode_jwt
+from src.security.sign_jwt import JWTToken, decode_jwt
 
 class JWTBearer(HTTPBearer):
     def __init__(self, auto_error: bool = True):

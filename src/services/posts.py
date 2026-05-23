@@ -1,9 +1,9 @@
 from databases.interfaces import Record
 from fastapi import HTTPException, status
 
-from models.post import posts
-from schemas.post import PostIn, PostUpdateIn
-from database import database
+from src.models.post import posts
+from src.schemas.post import PostIn, PostUpdateIn
+from src.database import database
 
 class PostService:
     async def get_all(self, published: bool = True, limit: int = 10, skip: int = 0) -> list[Record]:

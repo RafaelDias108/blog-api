@@ -3,7 +3,7 @@ import uuid
 import jwt
 
 from pydantic import BaseModel
-from settings import settings
+from src.settings import settings
 
 SECRET = settings.jwt_secret
 ALGORITHM = settings.jwt_algorithm
