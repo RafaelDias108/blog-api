@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", env_file_encoding="utf-8")
 
     database_url: str
+    database_test_url: str
     environment: str = "production"
     jwt_secret: str
     jwt_algorithm: str = "HS256"

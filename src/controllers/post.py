@@ -10,7 +10,7 @@ router = APIRouter(prefix="/posts", dependencies=[Depends(login_required)])
 post_service = PostService()
 
 @router.get("", response_model=list[PostOut], description="Get all posts")
-async def read_posts(published: bool = True, limit: int = 10, skip: int = 0):
+async def read_posts(published: bool, limit: int, skip: int = 0):
     return await post_service.get_all(published=published, limit=limit, skip=skip)
 
 @router.get("/{id}", response_model=PostOut, description="Get post by id")
