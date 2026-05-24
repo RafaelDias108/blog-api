@@ -6,7 +6,7 @@ from src.schemas.post import PostIn, PostUpdateIn
 from src.database import database
 
 class PostService:
-    async def get_all(self, published: bool = True, limit: int = 10, skip: int = 0) -> list[Record]:
+    async def get_all(self, published: bool, limit: int, skip: int = 0) -> list[Record]:
         query = posts.select().where(posts.c.published == published).limit(limit).offset(skip)
         return await database.fetch_all(query=query)
 
@@ -24,7 +24,7 @@ class PostService:
         return {**post.model_dump(), "id": last_record_id}
 
     async def update(self, id: int, post: PostUpdateIn) -> Record:
-        total = self.count(id=id)
+        total = await self.count(id=id)
         if not total:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
 
@@ -35,6 +35,7 @@ class PostService:
         return await self.__get_by_id(id)
 
     async def delete(self, id: int) -> None:
+        await self.__get_by_id(id)
         query = posts.delete().where(posts.c.id == id)
         await database.execute(query)
     
